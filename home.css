@@ -1,0 +1,417 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #e1cfd1a4;
+    position: relative;
+}
+
+.container{
+    background-color: rgba(255, 255, 255, 0.731);
+    /* border: 5px solid black; */
+    border-radius: 25px;
+    width: 90%;
+    height: fit-content;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 9px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+    height: 10%;
+    border-radius: 25px 25px 0 0;
+}
+
+nav div{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin: 5px;
+    background-color: #e2b8bd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user p{
+    font-size: 27px;
+    color: white;
+}
+
+nav h4{
+    font-size: 22px;
+    color: #285380;
+}
+
+main{
+    width: 100%;
+}
+
+section{
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+section div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 20px;
+}
+
+.title{
+    font-size: 20px;
+}
+
+.icons button{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ffffff00;
+    cursor: pointer;
+}
+
+.icons button i{
+    font-size: 20px;
+}
+
+.icons i:first-of-type{
+    padding-right: 20px;
+    font-weight: bold;
+}
+
+.lbls{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.lbls > div{
+    width: 100%;
+    background-color: #ffff;
+    color: #285380;
+    border-radius: 16px;
+    margin: 010px;
+    margin-right: 11px;
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lbls div div{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    height: 45px;
+    margin: 0;
+    padding: 0;
+}
+
+.lbls div div i{
+    font-size: 22px;
+    padding-right: 5px;
+}
+
+.add, .add_label,.edit{
+    width: 90%;
+    top: 68%;
+    border-radius: 0 0 25px 25px;
+    display: none;
+    position: absolute;
+}
+
+.add_label{
+    top: 80%;
+}
+
+.add p,.add_label p,.edit p{
+    background-color: rgb(237, 222, 222);
+    height: 50px;
+    border-radius: 20px 20px 0 0;
+    text-align: center;
+    color: #285380;
+    font-size: 20px;
+    padding-top: 12px;
+}
+
+.add div,.edit div{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    background-color: white; 
+}
+
+.add div:nth-of-type(2),.edit div:nth-of-type(2){
+    border-radius: 0 0 25px 25px;
+}
+
+.add_label div{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    background-color: white;
+    border-radius: 0 0 25px 25px;
+}
+
+.add div input,.add_label div input,.edit div input{
+    width: 80%;
+    height: 35px;
+    border: 0.5px #ffff;
+    border-radius: 10px;
+    outline: none;
+    text-indent: 15px;
+    background-color: whitesmoke;
+}
+
+.add div button,.add_label div button,.edit div button{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgb(237, 222, 222);
+    font-size: 20px;
+    text-align: center;
+    color: #285380;
+    cursor: pointer;
+}
+
+.add div input:focus,.edit div input:focus{
+    border-color: #fbf4f582;
+}
+
+select {
+    width: 100px;
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none; 
+    border: 1px solid #ddd; 
+    border-radius: 4px; 
+    padding: 10px; 
+    font-size: 16px; 
+    color: #333; 
+    background-color: #fff; 
+    background-image: linear-gradient(45deg, transparent 50%, #ccc 50%), linear-gradient(135deg, #ccc 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(100% - 15px), calc(100% - 15px) calc(100% - 15px);
+    background-size: 8px 8px, 8px 8px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+select option{
+    padding: 10px;
+    background-color: #fff ;
+    outline-color: #333;
+}
+
+select:hover {
+    border-color: #aaa; 
+}
+
+select:focus {
+    outline: none; 
+    border-color: #888; 
+    box-shadow: 0 0 5px rgba(168, 166, 166, 0.2); 
+}
+
+.add.visible{
+    display: block;
+}
+
+.add_label.visible{
+    display: block;
+}
+
+.edit.visible{
+    display: block;
+}
+
+.prjs{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.prjs div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    height: 50px;
+    width: 45%;
+    padding: 2px;
+}
+
+.prjs div p{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.prjs div>p:nth-of-type(1) i{
+    cursor: pointer;
+    margin-right: 10px;
+    display: inline;
+}
+
+.prjs div p:nth-of-type(2) button{
+    padding: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #285380;
+    color: white;
+}
+
+.prjs div p:nth-of-type(2) button:nth-of-type(2){
+    border: none;
+    background-color: white;
+}
+
+.prjs div p:nth-of-type(2) button:nth-of-type(2) i{
+    font-size: 18px;
+    color: #285380;
+}
+
+.prjs button[id^='done']{
+    border: none;
+    background-color: #ffffff00;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width:890px) {
+    .prjs div{
+        width: 100%;   
+    }
+}
+
+@media ((max-width:1005px) and (max-height:651px)) {
+    .edit{
+        top: 72%;
+    }
+    .add_label{
+        top: 83%;
+    }
+    .add{
+        top: 72%;
+    }
+}
+
+@media (((max-width:883px) and (max-height:651px)) or ((max-width:769px) and (max-height:1025px)) ) {  
+    .edit{
+        top: 77%;
+    }
+    .add_label{
+        top: 86%;
+    }
+    .add{
+        top: 77%;
+    }
+}
+
+@media ((max-width:820px) and (max-height:651px)) {
+    .edit{
+        top: 79%;
+    }
+    .add_label{
+        top: 87%;
+    }
+    .add{
+        top: 79%;
+    }
+}
+
+@media ((max-width:430px) and (max-height:651px)) {
+    .edit{
+        top: 82%;
+    }
+    .add_label{
+        top: 88%;
+    }
+    .add{
+        top: 83%;
+    }
+}
+
+@media ((max-width:376px) and (max-height:668px)) {
+    .edit{
+        top: 82%;
+    }
+    .add_label{
+        top: 88%;
+    }
+    .add{
+        top: 77%;
+    }
+}
+
+@media (((max-width:415px) and (max-height:897px)) or ((max-width:431px) and (max-height:933px))) {
+    .edit{
+        top: 79%;
+    }
+    .add_label{
+        top: 87%;
+    }
+    .add{
+        top: 79%;
+    }
+}
+
+@media ((max-width:391px) and (max-height:845px)) {  
+    .edit{
+        top: 82%;
+    }
+    .add_label{
+        top: 89%;
+    }
+    .add{
+        top: 82%;
+    }
+}
+
+@media ((max-width:413px) and (max-height:916px)) { 
+    .edit{
+        top: 81%;
+    }
+    .add_label{
+        top: 89%;
+    }
+    .add{
+        top: 81%;
+    }
+}
+
+@media (max-width:345px) {
+    .prjs div p:nth-of-type(1){
+        display: flex;
+    }
+}

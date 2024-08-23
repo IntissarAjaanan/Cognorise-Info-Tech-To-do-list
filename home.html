@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>home</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="container">
+
+        <nav>
+            <div class="user"> 
+                <p></p>
+            </div>
+            <h4>Home</h4>
+        </nav>
+
+        <main>
+
+            <section class="projects">
+                <div>
+                    <h3 class="title">Tasks</h3>
+                    <div class="icons">
+                        <button id="add_task"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="prjs"></div>
+            </section>
+
+            <section class="labels">
+                <div>
+                    <h3 class="title">Labels</h3>
+                    <div class="icons">
+                        <button id="add_lab"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="lbls"></div>
+            </section>
+
+        </main>
+
+        <div class="add">
+            <p>What would you like to do?</p>
+            <form >
+                <div>
+                    <input type="text" name="task" id="tsk">
+                    <button type="submit"><i id="yes" class="fa fa-check"></i></button>
+                    <button type="reset"><i id="close" class="fa fa-close"></i></button>
+                </div>
+                <div class="lbst">
+                    <select id="lab" name="lab" style="width: 90%;"></select>
+                </div>
+            </form>
+        </div>
+
+        <div class="edit">
+            <p>Edit Task!</p>
+            <form >
+                <div>
+                    <input type="text" name="task" id="ts">
+                    <button type="submit"><i class="fa fa-check"></i></button>
+                    <button type="reset"><i  class="fa fa-close"></i></button>
+                </div>
+                <div class="lbst_edit">
+                    <select id="labedit" name="labedit" style="width: 90%;"></select>
+                </div>
+            </form>
+        </div>
+
+        <div class="add_label">
+            <form id="addt">
+                <p>Add an label:</p>
+                <div>
+                    <input type="text" name="label" id="lbl">
+                    <button type="submit" ><i id="yes" class="fa fa-check"></i></button>
+                    <button type="reset"><i id="close" class="fa fa-close"></i></button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+    <script>
+
+        //add new label to labels on localStorage
+        if (!localStorage.getItem('labels')) {
+            let la = [{'Study':0}, {'Sports':0}, {'Work':0}, {'Personal':0}, {'Habit':0}];
+            localStorage.setItem('labels', JSON.stringify(la));
+        }
+
+       document.getElementById('addt').addEventListener('submit',function(e){
+            e.preventDefault();
+
+            const labs=JSON.parse(localStorage.getItem('labels'));
+            let ls=document.getElementById('lbl').value;
+
+            let l = {
+                [ls]: 0
+            };
+
+            if(ls.trim() != ''){
+                labs.push(l);
+            }
+
+            localStorage.setItem('labels',JSON.stringify(labs))
+            document.querySelector('#addt').reset()
+
+            addLabelToDom();
+        
+       })
+
+        // Add labels automatically
+        function addLabelToDom() {
+            const div = document.querySelector('.lbls');
+            const labSelect = document.getElementById('lab');
+            const labSelectedit = document.getElementById('labedit');
+
+            div.innerHTML = '';
+            labSelect.innerHTML = '';
+
+            const labels = JSON.parse(localStorage.getItem('labels'));
+            
+            labels.map(label => {
+                Object.keys(label).forEach(key => {
+                    const sdiv = document.createElement('div');
+                    const option1 = document.createElement('option');
+                    option1.value = key;
+                    option1.textContent = key;
+                    const option2 = document.createElement('option');
+                    option2.value = key;
+                    option2.textContent = key;
+                    labSelect.appendChild(option1);
+                    labSelectedit.appendChild(option2);
+
+
+                    sdiv.innerHTML = `<div><i class='fa fa-bookmark-o'></i><span>${key}</span></div><small>${label[key]}</small>`;
+                    div.appendChild(sdiv);
+                });
+            });
+        }
+        addLabelToDom();
+
+        //add first name's letter as a photo
+        const user = localStorage.getItem('user_name');
+        document.querySelector('.user p').innerText = user.slice(0,1).toUpperCase();
+
+        //make add  task form visible
+        const addTaskBtn=document.querySelector('#add_task');
+        addTaskBtn.addEventListener('click',function(){
+
+            document.querySelector('.add').classList.toggle('visible');
+
+            if(document.querySelector('.add_label').classList.contains('visible')){
+                document.querySelector('.add_label').classList.remove('visible');
+            }else if( document.querySelector('.edit').classList.contains('visible')){
+                document.querySelector('.edit').classList.remove('visible');
+            }
+
+        })
+
+        //make add label form visible
+        const addLabelBtn=document.querySelector('#add_lab');
+
+        addLabelBtn.addEventListener('click',function(){
+        document.querySelector('.add_label').classList.toggle('visible');
+
+        if(document.querySelector('.add').classList.contains('visible')){
+                document.querySelector('.add').classList.remove('visible');
+        }else if( document.querySelector('.edit').classList.contains('visible')){
+                document.querySelector('.edit').classList.remove('visible');
+        }
+
+        })
+
+        //make add task form invisible (X btn)
+        document.querySelector('.add form').addEventListener('reset',function(e){
+
+            document.querySelector('.add').classList.remove('visible');
+
+        })
+        
+        //make edit task form invisible (X btn)
+        document.querySelector('.edit form').addEventListener('reset',function(e){
+
+            document.querySelector('.edit').classList.remove('visible');
+
+        })
+
+        //make add label form invisible (X btn)
+        document.querySelector('.add_label form').addEventListener('reset',function(e){
+
+            document.querySelector('.add_label').classList.remove('visible');
+
+        })
+
+        //add task to localStorage
+        document.querySelector('.add form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const taskName = document.querySelector('#tsk').value;
+            const taskLabel = document.querySelector('#lab').value;
+
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+            if (taskName.trim() !== '') {
+
+                const task = {
+                    taskId:  Date.now(),
+                    taskTitle: taskName,
+                    taskLabel: taskLabel,
+                    done: false
+                }
+
+                tasks.push(task);
+                
+                increaseCountLabel(task);
+
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+
+                document.querySelector('.add form').reset();
+
+                location.reload();
+            }
+        })
+
+        //increase label
+        function increaseCountLabel(task){
+            const lbs = JSON.parse(localStorage.getItem('labels'));
+                console.log(lbs);
+
+                    lbs.forEach((lb) => {
+                        Object.keys(lb).forEach(k=>{
+                            
+                            console.log(`Label Key: ${k}`);
+                            console.log(`Label Count Before Increment: ${lb[k]}`);
+    
+                            if (task.taskLabel == k) {
+                                lb[k] = parseInt(lb[k]) + 1; 
+                            }
+                            console.log(`Label Count After Increment: ${lb[k]}`);
+
+
+                        })
+                    });
+
+                localStorage.setItem('labels', JSON.stringify(lbs));
+        }
+
+        //decrease label
+        function decreaseCountLabel(taskId) {
+                const lbs = JSON.parse(localStorage.getItem('labels')) || [];
+                const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+                const task = tasks.find(t => t.taskId.toString() === taskId.toString());
+
+                if (!task) {
+                    console.error('Task not found with ID:', taskId);
+                    return;
+                }
+
+                lbs.forEach(lb => {
+                    Object.keys(lb).forEach(labelKey => {
+
+                        if (task.taskLabel === labelKey && lb[labelKey] > 0) {
+                            lb[labelKey] = parseInt(lb[labelKey]) - 1;
+                        }
+
+                    });
+                });
+
+                localStorage.setItem('labels', JSON.stringify(lbs));
+        }
+
+
+        // add tasks to dom
+        let ts=JSON.parse(localStorage.getItem('tasks'));
+
+        if(ts!==null){
+            ts.map((t)=>{
+
+                let container=document.createElement('div');
+                container.innerHTML=`<p><button id='done${t.taskId}' data='${t.taskId}'><i class='fa fa-circle-o'></i></button>${t.taskTitle}</p><p><button onclick='editTask(${t.taskId})'>${t.taskLabel}</button><button id='trash${t.taskId}' data='${t.taskId}'><i class='fa fa-trash-o'></i></button></p>`;
+                document.querySelector('.prjs').appendChild(container);
+                
+            })
+
+        }
+
+        
+        //delete task
+        let btns = document.querySelectorAll("button[id^='trash']");
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                let index=this.getAttribute('data');
+                
+                decreaseCountLabel(index);
+
+                let taskId = btn.getAttribute('data');
+                
+                btn.parentElement.parentElement.remove();
+        
+                let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+                tasks = tasks.filter(task => task.taskId != taskId);
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+                
+                
+                location.reload();
+            });
+        })
+        
+       //line through the checked ones 
+       if(ts!==null){
+            ts.map((t) => {
+                    let tasks = JSON.parse(localStorage.getItem('tasks'));
+                    const taskElement = document.querySelector(`#done${t.taskId}`);
+
+                    if (t.done) {
+                        taskElement.innerHTML = '';
+                        taskElement.innerHTML = "<i class='fa fa-check-circle-o'></i>";
+                        taskElement.parentNode.style.textDecoration = 'line-through';
+                    } else {
+                        taskElement.innerHTML = '';
+                        taskElement.innerHTML = "<i class='fa fa-circle-o'></i>";
+                        taskElement.parentNode.style.textDecoration = 'none';
+                    }
+
+                    taskElement.addEventListener('click', function () {
+
+                        const index = this.getAttribute('data'); 
+                        tasks.forEach(task=>{
+                            console.log(task);
+                            console.log(task.taskId);
+                            console.log(index);
+                            if (task.taskId==index){
+
+                                if (task.done === false) {
+                                    task.done = true;
+                                    this.innerHTML = "<i class='far fa-check-circle'></i>";
+                                    this.parentNode.style.textDecoration = 'line-through';
+                                    location.reload();
+                                } else {
+                                    task.done = false;
+                                    this.innerHTML = "<i class='fa fa-circle-o'></i>";
+                                    this.parentNode.style.textDecoration = 'none';
+                                    location.reload();
+                                }
+        
+                                localStorage.setItem('tasks', JSON.stringify(tasks));
+                            }
+                        })
+
+                    });
+            });
+       }
+
+       //edit task
+       function editTask(taskId) {
+            const tasks = JSON.parse(localStorage.getItem('tasks'));
+            const editTaskForm = document.querySelector('.edit');
+
+            const task = tasks.find(t => t.taskId.toString() === taskId.toString());
+
+            editTaskForm.classList.add('visible');
+            document.querySelector('.add').classList.remove('visible');
+            document.querySelector('.add_label').classList.remove('visible');
+
+            document.querySelector('.edit #ts').value = task.taskTitle ; 
+            document.querySelector('.edit #labedit').value = task.taskLabel ;
+
+            editTaskForm.onsubmit = function (event) {
+                event.preventDefault();
+
+                task.taskTitle = document.querySelector('.edit #ts').value;
+                task.taskLabel = document.querySelector('.edit #labedit').value;
+
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+                updateLabelCounts()
+
+                location.reload();
+            };
+        }
+
+        function updateLabelCounts() {
+
+            let lbs = JSON.parse(localStorage.getItem('labels')) || [];
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+            const labelCounts = {};
+
+            lbs.forEach((lb) => {
+                Object.keys(lb).forEach(k => {
+                    labelCounts[k] = 0;
+                });
+            });
+
+            tasks.forEach(task => {
+                if (task.taskLabel) {
+                    if (labelCounts[task.taskLabel] !== undefined) {
+                        labelCounts[task.taskLabel]++;
+                    }
+                }
+            });
+
+            lbs.forEach((lb) => {
+                Object.keys(lb).forEach(k => {
+                    if (labelCounts[k] !== undefined) {
+                        lb[k] = labelCounts[k];
+                    }
+                });
+            });
+
+            localStorage.setItem('labels', JSON.stringify(lbs));
+        }
+
+    </script>
+
+</body>
+</html>
